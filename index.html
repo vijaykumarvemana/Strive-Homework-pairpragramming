@@ -58,6 +58,9 @@
       </div>
 
 
+      <button type="button" class="btn btn-primary my-5" onlick="userNames()">Primary</button>
+
+
     <script
       src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
       integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
@@ -69,6 +72,10 @@
       crossorigin="anonymous"
     ></script>
     <script>
+
+
+const btn = document.querySelector("btn")
+     
       const getUsers = async () => {
         try {
           const response = await fetch(
@@ -78,6 +85,7 @@
           console.log(data)
           userNames(data)
           listAddress(data)
+          filterUser(data)
         } catch (err) {
           console.log(err)
         } finally {
@@ -87,8 +95,10 @@
       const userNames = function (data){
          console.log(data)
          data.forEach(element => {
-             console.log(element.name)
-             
+             console.log(element.sort( function(a,b){
+                 return a.id - b.id
+             }))
+            
          });
          
       }
@@ -107,6 +117,11 @@
             console.log(JSON.stringify(array))
          } )
       }
+      const filterUser = function(data){
+         let users = data.filter(user => user.name === "Glenna" && user.id === 9 ? user.id : user.name )
+         console.log(users)
+      }
+      
  window.onload = () =>{
     getUsers()
     
