@@ -58,7 +58,7 @@
       </div>
 
 
-      <button type="button" class="btn btn-primary my-5" onlick="userNames()">Primary</button>
+      <button type="button" class="btn btn-primary my-5" onlick="userNames">Primary</button>
 
 
     <script
@@ -95,9 +95,7 @@ const btn = document.querySelector("btn")
       const userNames = function (data){
          console.log(data)
          data.forEach(element => {
-             console.log(element.sort( function(a,b){
-                 return a.id - b.id
-             }))
+             console.log(element.name)
             
          });
          
