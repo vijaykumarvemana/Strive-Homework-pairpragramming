@@ -112,7 +112,7 @@ const displayUsers = function(data){
                     ${ data.map((user) => `
                     <tr>
                     <th scope="row">${user.id}</th>
-                    <td><a href="./info.html?userId${user.id}">${user.name}</a></td>
+                    <td><a href="info.html?userId=${user.id}">${user.name}</a></td>
                     <td>${user.username}</td>
                     <td>${user.email}</td>
                     <td>${Object.values(user.address).filter( value => typeof value !=="object").join(',')}</td>
