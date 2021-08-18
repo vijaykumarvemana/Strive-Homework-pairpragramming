@@ -59,7 +59,7 @@
           <div class="input-group mb-3">
             <input type="text" id="input" class="form-control" placeholder="User Input . . ." aria-label="Recipient's username" aria-describedby="basic-addon2">
             <div class="input-group-append">
-              <button class="btn btn-outline-secondary" type="button">Submit</button>
+              <button class="btn btn-outline-secondary" id ="btn" type="button">ASC</button>
             </div>
           </div>
           </div>
@@ -112,7 +112,7 @@ const displayUsers = function(data){
                     ${ data.map((user) => `
                     <tr>
                     <th scope="row">${user.id}</th>
-                    <td>${user.name}</td>
+                    <td><a href="./info.html?userId${user.id}">${user.name}</a></td>
                     <td>${user.username}</td>
                     <td>${user.email}</td>
                     <td>${Object.values(user.address).filter( value => typeof value !=="object").join(',')}</td>
@@ -147,6 +147,18 @@ const displayUsers = function(data){
               const fillterd = data.filter((user) => user[selected].toLowerCase().includes(e.target.value))
               console.log(fillterd)
               displayUsers(fillterd)
+           })
+           const btn = document.querySelector("#btn")
+           btn.addEventListener("click", (e) => {
+               const sortedUser = data.sort((a , b) => a.name.toLowerCase() > b.name.toLowerCase() ? 1 : a.name.toLowerCase() < b.name.toLowerCase() ? -1 : 0 )
+               console.log(sortedUser)
+               if(e.target.innerText === "ASC"){
+                   e.target.innerText ="DES"
+                   displayUsers(sortedUser)
+               }else{
+                   e.target.innerText ="ASC"
+                   displayUsers(sortedUser.reverse())
+               }
            })
 
           
