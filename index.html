@@ -137,6 +137,7 @@ const displayUsers = function(data){
           );
           const data = await response.json()
           console.log(data)
+          userNames(data)
           displayUsers(data)
           const input = document.querySelector("#input")
           input.addEventListener('input', (e) =>{
@@ -156,16 +157,13 @@ const displayUsers = function(data){
       };
 
 
-    //   //ex-3...
+       //ex-3...
 
-    //   const userNames = function (data){
-    //      console.log(data)
-    //      data.forEach(element => {
-    //          console.log(element.name)
-            
-    //      });
+       const userNames = (data) => {
+        const userN = data.map(user => user.name )
+        console.log(userN)
          
-    //   }
+       }
     //  //ex-4...
     //   const listAddress = function(data){
     //      data.map((element) =>{
