@@ -18,7 +18,7 @@
     <!--
       PAIR PROGRAMMING EXERCISE.
       1 DRIVER, 1 NAVIGATOR.
-      1 Exercise each. Use GitHub to share the code.
+      1 Exercise each. Use GitHub to share the code.    
       Less exercise, more complicated. 
       Ex1) Get and display, using async / await, the users from: https://jsonplaceholder.typicode.com/users 
       Ex2) Create a dropdown (<select>) that allows the user to select between name, username and email. 
@@ -45,20 +45,33 @@
   </head>
 
   <body>
-    <h1>USERS</h1>
-    <div class="dropdown">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Dropdown button
-        </button>
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-          <a class="dropdown-item" href="#">Name</a>
-          <a class="dropdown-item" href="#">user Name</a>
-          <a class="dropdown-item" href="#">Email</a>
+    <h1 class="text-center  text-dark mb-4">Users-Info</h1>
+      <div class="container d-flex">
+    
+        <div class="input-group mr-3">
+            <select class="custom-select selected" id="inputGroupSelect02">
+              
+              <option value="name">Name</option>
+              <option value="username">User Name</option>
+              <option value="email">Email</option>
+            </select>
+          </div>
+          <div class="input-group mb-3">
+            <input type="text" id="input" class="form-control" placeholder="User Input . . ." aria-label="Recipient's username" aria-describedby="basic-addon2">
+            <div class="input-group-append">
+              <button class="btn btn-outline-secondary" type="button">Submit</button>
+            </div>
+          </div>
+          </div>
+          <div class="container table">
+            
         </div>
-      </div>
+          
+      
+    
 
 
-      <button type="button" class="btn btn-primary my-5" onlick="userNames">Primary</button>
+      
 
 
     <script
@@ -74,9 +87,47 @@
     <script>
 
 
-const btn = document.querySelector("btn")
-btn.addEventListener("click", sortList)
-let arr = []
+// const btn = document.querySelector("btn")
+// btn.addEventListener("click", sortList)
+// let arr = []
+
+const displayUsers = function(data){
+  const tableContainer = document.querySelector(".table")  
+  console.log(tableContainer)
+  const table = `<table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Username</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Address</th>
+                    <th scope="col">Company</th>
+                    <th scope="col">Phone</th>
+                    <th scope="col">Website</th>
+
+                  </tr>
+                </thead>
+                <tbody>
+                    ${ data.map((user) => `
+                    <tr>
+                    <th scope="row">${user.id}</th>
+                    <td>${user.name}</td>
+                    <td>${user.username}</td>
+                    <td>${user.email}</td>
+                    <td>${Object.values(user.address).filter( value => typeof value !=="object").join(',')}</td>
+                    <td>${Object.values(user.company).join(',')}</td>
+                    <td>${user.phone}</td>
+                    <td>${user.website}</td>
+
+                  </tr>`
+
+                    ).join('')}
+                </tbody>
+              </table>`
+         tableContainer.innerHTML = table    
+
+}
       
      //ex-1....
       const getUsers = async () => {
@@ -86,10 +137,18 @@ let arr = []
           );
           const data = await response.json()
           console.log(data)
-          arr.push(data)
-          userNames(data)
-          listAddress(data)
-          filterUser(data)
+          displayUsers(data)
+          const input = document.querySelector("#input")
+          input.addEventListener('input', (e) =>{
+              console.log(e.target.value)
+              const selected = document.querySelector(".selected").value
+              console.log(selected)
+              const fillterd = data.filter((user) => user[selected].toLowerCase().includes(e.target.value))
+              console.log(fillterd)
+              displayUsers(fillterd)
+           })
+
+          
         } catch (err) {
           console.log(err)
         } finally {
@@ -97,43 +156,43 @@ let arr = []
       };
 
 
-      //ex-3...
+    //   //ex-3...
 
-      const userNames = function (data){
-         console.log(data)
-         data.forEach(element => {
-             console.log(element.name)
+    //   const userNames = function (data){
+    //      console.log(data)
+    //      data.forEach(element => {
+    //          console.log(element.name)
             
-         });
+    //      });
          
-      }
-     //ex-4...
-      const listAddress = function(data){
-         data.map((element) =>{
-             let elementData= element.address.street
-             let elementData1= element.address.suite
-             let elementData2= element.address.city
-             let elementData3= element.address.zipcode
+    //   }
+    //  //ex-4...
+    //   const listAddress = function(data){
+    //      data.map((element) =>{
+    //          let elementData= element.address.street
+    //          let elementData1= element.address.suite
+    //          let elementData2= element.address.city
+    //          let elementData3= element.address.zipcode
 
-             let array = [elementData, elementData1, elementData2, elementData3]
-             console.log(array.toString())
-            //  console.log(elementData)
-            //  console.log(elementData1)
-            console.log(JSON.stringify(array))
-         } )
-      }
-
-      //ex-2...
-    //   const filterUser = function(data){
-    //      let users = data.filter(user => user.name === "Glenna" && user.id === 9 ? user.id : user.name )
-    //      console.log(users)
+    //          let array = [elementData, elementData1, elementData2, elementData3]
+    //          console.log(array.toString())
+    //         //  console.log(elementData)
+    //         //  console.log(elementData1)
+    //         console.log(JSON.stringify(array))
+    //      } )
     //   }
 
-      //ex-5 
+    //   //ex-2...
+    // //   const filterUser = function(data){
+    // //      let users = data.filter(user => user.name === "Glenna" && user.id === 9 ? user.id : user.name )
+    // //      console.log(users)
+    // //   }
+
+    //   //ex-5 
       
-    //   const sortList = function(array){
-    //     array.sort()
-    //   }
+    // //   const sortList = function(array){
+    // //     array.sort()
+    // //   }
       
  window.onload = () =>{
     getUsers()
